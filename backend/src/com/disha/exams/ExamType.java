@@ -8,7 +8,9 @@ public enum ExamType {
     MANAGEMENT("Management & Business Schools", "CAT, XAT, SNAP for IIMs/XLRI"),
     DEFENCE("Armed Forces & Defence Services", "CDS, AFCAT, INET, Indian Navy Tech"),
     CIVIL_SERVICES("Civil & Administrative Services", "UPSC CSE, State Public Service Commissions"),
-    CORPORATE_SDE("Corporate & SDE Hiring Drives", "Tier-1 Tech Companies & National Hiring Drives");
+    CORPORATE_SDE("Corporate & SDE Hiring Drives", "Tier-1 Tech Companies & National Hiring Drives"),
+    HIGHER_STUDIES_ABROAD("Higher Studies & Global Exams", "GRE, GMAT, TOEFL for MS/Ph.D/MBA abroad"),
+    GOVERNMENT_BANKING("Government & Banking Services", "SSC CGL, IBPS PO, SBI PO, RBI Grade B");
 
     private final String title;
     private final String description;

@@ -1,15 +1,52 @@
 import React, { useState, useEffect } from 'react';
 import Header from './components/Header';
-import StudentForm, { PRESETS } from './components/StudentForm';
-import ResultsPanel from './components/ResultsPanel';
-import BatchProcessor from './components/BatchProcessor';
-import ExamCatalog from './components/ExamCatalog';
+import StudentProfileForm, { PRESETS } from './components/StudentProfileForm';
+import StudentResultsPanel from './components/StudentResultsPanel';
+import WhatIfSimulator from './components/WhatIfSimulator';
+import StudentNotificationsView from './components/StudentNotificationsView';
+import PreparationPathwaysCatalog from './components/PreparationPathwaysCatalog';
+import TeacherBatchView from './components/TeacherBatchView';
+import TeacherAnalyticsView from './components/TeacherAnalyticsView';
 import AuditLogViewer from './components/AuditLogViewer';
-import { evaluateStudent } from './services/api';
+import PathwayModal from './components/PathwayModal';
+import BroadcastModal from './components/BroadcastModal';
+import AddStudentModal from './components/AddStudentModal';
+
+import {
+  evaluateStudent,
+  runBatchEvaluation,
+  fetchNotifications,
+  sendNotification,
+  fetchPathways,
+  addStudentToBatch
+} from './services/api';
+
+import {
+  GraduationCap,
+  Users,
+  Compass,
+  Sliders,
+  Bell,
+  Cpu,
+  TrendingUp,
+  FileText,
+  AlertTriangle,
+  Send
+} from 'lucide-react';
+
 import './App.css';
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState('evaluator');
+  // Portal Role: 'student' | 'teacher'
+  const [activeRole, setActiveRole] = useState('student');
+
+  // Sub-tabs for Student Portal
+  const [studentTab, setStudentTab] = useState('eligibility'); // 'eligibility' | 'pathways' | 'simulator' | 'notifications'
+
+  // Sub-tabs for Teacher Portal
+  const [teacherTab, setTeacherTab] = useState('batch'); // 'batch' | 'broadcast' | 'analytics' | 'audit'
+
+  // Student Profile state
   const [currentStudent, setCurrentStudent] = useState({
     id: PRESETS[0].id,
     name: PRESETS[0].name,
@@ -26,28 +63,76 @@ export default function App() {
     degreeCompleted: false
   });
 
+  // Data states
   const [evaluationData, setEvaluationData] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [batchData, setBatchData] = useState(null);
+  const [notifications, setNotifications] = useState([]);
+  const [pathwaysData, setPathwaysData] = useState(null);
+
+  // UI state & loaders
+  const [loadingEvaluation, setLoadingEvaluation] = useState(false);
+  const [loadingBatch, setLoadingBatch] = useState(false);
   const [error, setError] = useState(null);
 
-  const runEvaluation = async (profile) => {
-    setLoading(true);
+  // Modal controls
+  const [selectedPathwayCode, setSelectedPathwayCode] = useState(null);
+  const [broadcastTarget, setBroadcastTarget] = useState(null); // { students: [], examCode: '' }
+  const [showAddStudentModal, setShowAddStudentModal] = useState(false);
+
+  // --- API Actions ---
+
+  const runSingleEvaluation = async (profile) => {
+    setLoadingEvaluation(true);
     setError(null);
     try {
       const data = await evaluateStudent(profile);
       setEvaluationData(data);
     } catch (err) {
-      setError(err.message);
+      setError(err.message || 'Evaluation failed');
     } finally {
-      setLoading(false);
+      setLoadingEvaluation(false);
     }
   };
 
+  const loadBatchRoster = async () => {
+    setLoadingBatch(true);
+    try {
+      const data = await runBatchEvaluation();
+      setBatchData(data);
+    } catch (err) {
+      console.error('Batch load error:', err);
+    } finally {
+      setLoadingBatch(false);
+    }
+  };
+
+  const loadNotifications = async (studentId = null) => {
+    try {
+      const list = await fetchNotifications(studentId);
+      setNotifications(list);
+    } catch (err) {
+      console.error('Notifications load error:', err);
+    }
+  };
+
+  const loadPathways = async () => {
+    try {
+      const data = await fetchPathways();
+      setPathwaysData(data);
+    } catch (err) {
+      console.error('Pathways load error:', err);
+    }
+  };
+
+  // Initial Data Loading
   useEffect(() => {
-    // Initial evaluation with Aarav Sharma profile
-    runEvaluation(currentStudent);
+    runSingleEvaluation(currentStudent);
+    loadBatchRoster();
+    loadNotifications(currentStudent.id);
+    loadPathways();
   }, []);
 
+  // When student changes preset
   const handlePresetSelect = (preset) => {
     const updated = {
       ...currentStudent,
@@ -66,97 +151,300 @@ export default function App() {
       degreeCompleted: preset.currentYear >= 4
     };
     setCurrentStudent(updated);
-    runEvaluation(updated);
+    runSingleEvaluation(updated);
+    loadNotifications(updated.id);
   };
 
-  const handleFormSubmit = (e) => {
+  const handleStudentFormSubmit = (e) => {
     e.preventDefault();
-    runEvaluation(currentStudent);
+    runSingleEvaluation(currentStudent);
+  };
+
+  const handleApplySimulatedProfile = (updatedProfile) => {
+    setCurrentStudent(updatedProfile);
+    runSingleEvaluation(updatedProfile);
+    setStudentTab('eligibility');
+  };
+
+  const handleSendNotification = async (payload) => {
+    const res = await sendNotification(payload);
+    // Refresh notifications list and batch
+    loadNotifications(activeRole === 'student' ? currentStudent.id : null);
+    return res;
+  };
+
+  const handleAddStudent = async (studentPayload) => {
+    await addStudentToBatch(studentPayload);
+    // Reload batch data concurrently
+    loadBatchRoster();
   };
 
   return (
     <div className="app-container">
-      <Header />
+      {/* Flat Design Header */}
+      <Header
+        activeRole={activeRole}
+        onRoleChange={(role) => setActiveRole(role)}
+        currentStudent={currentStudent}
+        unreadCount={notifications.length}
+        onOpenNotifications={() => {
+          if (activeRole === 'student') setStudentTab('notifications');
+          else setTeacherTab('broadcast');
+        }}
+        serverStatus="ONLINE"
+      />
 
-      <nav className="nav-tabs">
-        <button
-          className={`tab-btn ${activeTab === 'evaluator' ? 'active' : ''}`}
-          onClick={() => setActiveTab('evaluator')}
-        >
-          <svg className="icon" viewBox="0 0 24 24">
-            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-            <circle cx="9" cy="7" r="4" />
-            <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
-            <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-          </svg>
-          Student Evaluation
-        </button>
-        <button
-          className={`tab-btn ${activeTab === 'batch' ? 'active' : ''}`}
-          onClick={() => setActiveTab('batch')}
-        >
-          <svg className="icon" viewBox="0 0 24 24">
-            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
-          </svg>
-          Multithreaded Batch (CSV)
-        </button>
-        <button
-          className={`tab-btn ${activeTab === 'catalog' ? 'active' : ''}`}
-          onClick={() => setActiveTab('catalog')}
-        >
-          <svg className="icon" viewBox="0 0 24 24">
-            <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z" />
-            <path d="M6 6h10M6 10h10" />
-          </svg>
-          Exam Catalog & Cutoffs
-        </button>
-        <button
-          className={`tab-btn ${activeTab === 'logs' ? 'active' : ''}`}
-          onClick={() => setActiveTab('logs')}
-        >
-          <svg className="icon" viewBox="0 0 24 24">
-            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-            <polyline points="14 2 14 8 20 8" />
-            <line x1="16" y1="13" x2="8" y2="13" />
-            <line x1="16" y1="17" x2="8" y2="17" />
-            <polyline points="10 9 9 9 8 9" />
-          </svg>
-          Audit Log Trail
-        </button>
-      </nav>
-
+      {/* Global Error Banner if any */}
       {error && (
-        <div style={{
-          padding: '12px 18px',
-          background: '#fef2f2',
-          border: '1px solid #fecaca',
-          color: '#991b1b',
-          borderRadius: '8px',
-          marginBottom: '20px',
-          fontSize: '0.86rem'
-        }}>
-          {error}
+        <div
+          style={{
+            padding: '14px 18px',
+            backgroundColor: '#fef2f2',
+            border: '2px solid #ef4444',
+            color: '#991b1b',
+            borderRadius: '6px',
+            marginBottom: '20px',
+            fontWeight: 700,
+            fontSize: '0.88rem'
+          }}
+        >
+          ✕ {error}
         </div>
       )}
 
-      {activeTab === 'evaluator' && (
-        <div className="evaluator-grid">
-          <StudentForm
-            student={currentStudent}
-            onChange={setCurrentStudent}
-            onPresetSelect={handlePresetSelect}
-            onSubmit={handleFormSubmit}
-            isLoading={loading}
-          />
-          <ResultsPanel data={evaluationData} />
+      {/* -------------------------------------------------------------
+          STUDENT DASHBOARD
+          ------------------------------------------------------------- */}
+      {activeRole === 'student' && (
+        <div>
+          {/* Sub Navigation Bar for Students */}
+          <nav className="sub-nav-bar">
+            <button
+              type="button"
+              className={`sub-tab-btn ${studentTab === 'eligibility' ? 'active' : ''}`}
+              onClick={() => setStudentTab('eligibility')}
+            >
+              <Compass size={18} />
+              Check Eligibility & Results
+            </button>
+
+            <button
+              type="button"
+              className={`sub-tab-btn ${studentTab === 'pathways' ? 'active' : ''}`}
+              onClick={() => setStudentTab('pathways')}
+            >
+              <GraduationCap size={18} />
+              Preparation Pathways & Roadmaps
+            </button>
+
+            <button
+              type="button"
+              className={`sub-tab-btn ${studentTab === 'simulator' ? 'active' : ''}`}
+              onClick={() => setStudentTab('simulator')}
+            >
+              <Sliders size={18} />
+              "What-If" Eligibility Simulator
+            </button>
+
+            <button
+              type="button"
+              className={`sub-tab-btn ${studentTab === 'notifications' ? 'active' : ''}`}
+              onClick={() => setStudentTab('notifications')}
+            >
+              <Bell size={18} />
+              Faculty Announcements ({notifications.length})
+            </button>
+          </nav>
+
+          {/* Tab 1: Profile + Eligibility Results Grid */}
+          {studentTab === 'eligibility' && (
+            <div className="dashboard-grid">
+              <StudentProfileForm
+                student={currentStudent}
+                onChange={setCurrentStudent}
+                onPresetSelect={handlePresetSelect}
+                onSubmit={handleStudentFormSubmit}
+                isLoading={loadingEvaluation}
+              />
+              <StudentResultsPanel
+                evaluationData={evaluationData}
+                onSelectPathway={(code) => setSelectedPathwayCode(code)}
+              />
+            </div>
+          )}
+
+          {/* Tab 2: Preparation Pathways Catalog */}
+          {studentTab === 'pathways' && (
+            <PreparationPathwaysCatalog
+              pathwaysData={pathwaysData}
+              onOpenPathwayModal={(code) => setSelectedPathwayCode(code)}
+            />
+          )}
+
+          {/* Tab 3: What-If Simulator */}
+          {studentTab === 'simulator' && (
+            <WhatIfSimulator
+              currentStudent={currentStudent}
+              onRunEvaluation={(simProfile) => {
+                runSingleEvaluation(simProfile);
+                setStudentTab('eligibility');
+              }}
+              onApplySimulation={handleApplySimulatedProfile}
+            />
+          )}
+
+          {/* Tab 4: Student Notifications Inbox */}
+          {studentTab === 'notifications' && (
+            <StudentNotificationsView
+              notifications={notifications}
+              currentStudent={currentStudent}
+            />
+          )}
         </div>
       )}
 
-      {activeTab === 'batch' && <BatchProcessor />}
+      {/* -------------------------------------------------------------
+          TEACHER / FACULTY DASHBOARD
+          ------------------------------------------------------------- */}
+      {activeRole === 'teacher' && (
+        <div>
+          {/* Sub Navigation Bar for Teachers */}
+          <nav className="sub-nav-bar">
+            <button
+              type="button"
+              className={`sub-tab-btn ${teacherTab === 'batch' ? 'active' : ''}`}
+              onClick={() => setTeacherTab('batch')}
+            >
+              <Cpu size={18} />
+              Batch Roster & Multithreaded Engine
+            </button>
 
-      {activeTab === 'catalog' && <ExamCatalog />}
+            <button
+              type="button"
+              className={`sub-tab-btn ${teacherTab === 'broadcast' ? 'active' : ''}`}
+              onClick={() => {
+                setTeacherTab('broadcast');
+                if (batchData && batchData.students) {
+                  setBroadcastTarget({
+                    students: batchData.students,
+                    examCode: 'ALL'
+                  });
+                }
+              }}
+            >
+              <Send size={18} />
+              Informing & Notifying Students
+            </button>
 
-      {activeTab === 'logs' && <AuditLogViewer />}
+            <button
+              type="button"
+              className={`sub-tab-btn ${teacherTab === 'analytics' ? 'active' : ''}`}
+              onClick={() => setTeacherTab('analytics')}
+            >
+              <TrendingUp size={18} />
+              Batch Analytics & Readiness
+            </button>
+
+            <button
+              type="button"
+              className={`sub-tab-btn ${teacherTab === 'audit' ? 'active' : ''}`}
+              onClick={() => setTeacherTab('audit')}
+            >
+              <FileText size={18} />
+              System Audit Trails
+            </button>
+          </nav>
+
+          {/* Tab 1: Batch Table & Concurrency Stats */}
+          {teacherTab === 'batch' && (
+            <TeacherBatchView
+              batchData={batchData}
+              onRefreshBatch={loadBatchRoster}
+              onOpenBroadcast={(filteredList, examCode) => {
+                setBroadcastTarget({
+                  students: filteredList,
+                  examCode: examCode
+                });
+              }}
+              onOpenAddStudent={() => setShowAddStudentModal(true)}
+              isLoading={loadingBatch}
+            />
+          )}
+
+          {/* Tab 2: Broadcast Notice Dispatcher */}
+          {teacherTab === 'broadcast' && (
+            <div>
+              <div className="flat-card" style={{ marginBottom: '20px' }}>
+                <div className="card-title-bar">
+                  <h3>
+                    <Send size={20} color="#3b82f6" />
+                    Faculty Notice & Recommendation Dispatcher
+                  </h3>
+                  <button
+                    type="button"
+                    className="btn btn-primary btn-sm"
+                    onClick={() => {
+                      setBroadcastTarget({
+                        students: batchData ? batchData.students : [],
+                        examCode: 'ALL'
+                      });
+                    }}
+                  >
+                    Compose New Broadcast Notice
+                  </button>
+                </div>
+                <p style={{ color: '#4b5563', fontSize: '0.92rem' }}>
+                  Send targeted announcements to students based on exam eligibility, academic achievements, or backlog remediation. All broadcasts are saved directly to Java file storage (<code>data/notifications.json</code>).
+                </p>
+              </div>
+
+              {/* Show recent broadcast notices list */}
+              <StudentNotificationsView
+                notifications={notifications}
+                currentStudent={{ name: 'Faculty Admin Broadcast Trail' }}
+              />
+            </div>
+          )}
+
+          {/* Tab 3: Batch Analytics & Insights */}
+          {teacherTab === 'analytics' && (
+            <TeacherAnalyticsView batchData={batchData} />
+          )}
+
+          {/* Tab 4: System Audit Trail */}
+          {teacherTab === 'audit' && <AuditLogViewer />}
+        </div>
+      )}
+
+      {/* -------------------------------------------------------------
+          MODALS
+          ------------------------------------------------------------- */}
+      {/* 1. Preparation Pathway Modal */}
+      {selectedPathwayCode && (
+        <PathwayModal
+          examCode={selectedPathwayCode}
+          pathwayData={pathwaysData}
+          onClose={() => setSelectedPathwayCode(null)}
+        />
+      )}
+
+      {/* 2. Broadcast / Notification Composer Modal */}
+      {broadcastTarget && (
+        <BroadcastModal
+          targetStudents={broadcastTarget.students}
+          initialExamCode={broadcastTarget.examCode}
+          onClose={() => setBroadcastTarget(null)}
+          onSendNotification={handleSendNotification}
+        />
+      )}
+
+      {/* 3. Add Student to Batch Modal */}
+      {showAddStudentModal && (
+        <AddStudentModal
+          onClose={() => setShowAddStudentModal(false)}
+          onAddStudent={handleAddStudent}
+        />
+      )}
     </div>
   );
 }

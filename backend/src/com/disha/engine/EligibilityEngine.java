@@ -238,5 +238,45 @@ public class EligibilityEngine {
                 6.0, 18, 30, 4, EnumSet.allOf(Branch.class),
                 60.0, 60.0, false
         ));
+
+        // 13. Higher Studies Abroad: GRE for Master of Science (MS)
+        examRegistry.add(new AbroadHigherStudiesExam(
+                "GRE-MS",
+                "GRE & MS in US/Europe (Top Global Universities)",
+                "Educational Testing Service (ETS)",
+                "Premier international graduate pathway for MS in Computer Science, Data Science & AI.",
+                6.5, 18, 45, 3, 0, EnumSet.allOf(Branch.class),
+                "Master of Science (MS)", true, 8.0
+        ));
+
+        // 14. Higher Studies Abroad: GMAT for Global MBA
+        examRegistry.add(new AbroadHigherStudiesExam(
+                "GMAT-MBA",
+                "GMAT Global MBA (INSEAD, Harvard, Stanford, LBS)",
+                "Graduate Management Admission Council",
+                "Apex international business school admission for prospective management leaders.",
+                6.0, 20, 45, 4, 0, EnumSet.allOf(Branch.class),
+                "Global Master of Business Administration", true, 7.5
+        ));
+
+        // 15. Government & Banking: SSC Combined Graduate Level (CGL)
+        examRegistry.add(new GovernmentBankingExam(
+                "SSC-CGL",
+                "SSC Combined Graduate Level (Inspector / Assistant Section Officer)",
+                "Staff Selection Commission",
+                "Central Government Group B & C prestigious administrative appointments.",
+                5.0, 18, 32, 4, 2,
+                "Staff Selection Commission", true
+        ));
+
+        // 16. Government & Banking: IBPS Probationary Officer (PO)
+        examRegistry.add(new GovernmentBankingExam(
+                "IBPS-PO",
+                "IBPS Probationary Officer (Public Sector Banks)",
+                "Institute of Banking Personnel Selection",
+                "Nationalized public sector bank management trainee and probationary officer cadre.",
+                5.0, 20, 30, 4, 0,
+                "IBPS", true
+        ));
     }
 }
