@@ -157,3 +157,91 @@ The embedded Java HTTP Server runs on `http://localhost:8080` and exposes the fo
 | `GET` | `/api/pathways` | Returns 4-phase preparation roadmaps, booklists, and timetables |
 | `GET` | `/api/logs` | Real-time stream of audit logs from `data/audit_logs.txt` |
 | `GET` | `/` | Serves the production React Single Page Application (SPA) |
+
+
+
+## 6. How to Run the Project
+
+Follow these steps to set up and run the DISHA Eligibility Engine on your local machine.
+
+### Prerequisites
+
+Install the following software before running the project:
+
+- **Git** — to clone the repository.
+- **Node.js and npm** — to install and run the React frontend.
+- **Java JDK** — to compile and run the Core Java backend.
+
+Verify your installations:
+
+```bash
+git --version
+node --version
+npm --version
+java -version
+javac -version
+```
+
+### Step 1: Clone the Repository
+
+Open a terminal and run:
+
+```bash
+git clone https://github.com/samruddhimagar07-sketch/disha-eligibility-engine.git
+cd disha-eligibility-engine
+```
+
+### Step 2: Run the Frontend
+
+Navigate to the frontend directory:
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+Wait for the terminal to display the local development URL. Open that URL in your browser to access the DISHA frontend.
+
+Keep the terminal running while using the application.
+
+### Step 3: Run the Java Backend
+
+Open a **second terminal** in the project root directory.
+
+Compile the backend Java source files and launch the backend using the project's configured build or run commands. The backend is intended to provide the REST API at:
+
+```text
+http://localhost:8080
+```
+
+The exact compilation and startup commands depend on the project's Java source structure and dependencies.
+
+### Step 4: Verify the Backend
+
+Once the backend is running, open the following URL in your browser:
+
+```text
+http://localhost:8080/api/health
+```
+
+A successful response should indicate that the backend service is running.
+
+Other available API endpoints include:
+
+- `GET /api/exams` — retrieve the examination catalog.
+- `POST /api/evaluate` — evaluate a student profile.
+- `GET /api/batch-sample` — evaluate the sample student batch.
+- `GET /api/pathways` — retrieve preparation pathways.
+- `GET /api/notifications` — retrieve notifications.
+
+### Troubleshooting
+
+- **`npm` is not recognized:** Install Node.js and reopen the terminal.
+- **Port already in use:** Stop the process using the required port or configure an available port.
+- **Java compilation errors:** Verify the installed JDK version and ensure all required source files and dependencies are available.
+- **Frontend cannot connect to the backend:** Confirm that the backend is running and that the API URL and frontend configuration match.
+
+### Repository
+
+GitHub: https://github.com/samruddhimagar07-sketch/disha-eligibility-engine
