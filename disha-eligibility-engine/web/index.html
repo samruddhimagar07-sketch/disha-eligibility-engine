@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Disha - Clear Direction for Your Next Big Step | Eligibility Engine</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-container">
+
+    <!-- Header with Official Disha Logo -->
+    <header class="glass-panel header">
+      <div class="brand-section">
+        <img src="assets/disha-logo.jpg" alt="Disha Logo" class="brand-logo-img">
+        <div class="brand-text">
+          <h1>Disha</h1>
+          <span class="brand-tagline">Clear Direction for Your Next Big Step &bull; Undergraduate Eligibility Engine</span>
+        </div>
+      </div>
+      <div class="header-status">
+        <div class="status-pill">
+          <span class="status-dot"></span>
+          <span>Rule Engine Active</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <nav class="nav-tabs">
+      <button class="tab-btn active" id="tabEvaluatorBtn" onclick="switchTab('evaluator')">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Student Evaluation
+      </button>
+      <button class="tab-btn" id="tabBatchBtn" onclick="switchTab('batch')">
+        <svg class="icon" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        Multithreaded Batch (CSV)
+      </button>
+      <button class="tab-btn" id="tabCatalogBtn" onclick="switchTab('catalog')">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10M6 10h10"/></svg>
+        Exam Catalog & Cutoffs
+      </button>
+      <button class="tab-btn" id="tabLogsBtn" onclick="switchTab('logs')">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        Audit Log Trail
+      </button>
+    </nav>
+
+    <!-- TAB 1: EVALUATOR VIEW -->
+    <div id="evaluatorView" class="evaluator-grid">
+      <!-- Left Column: Student Profile Input & Presets -->
+      <aside class="glass-panel sidebar-card">
+        <div class="presets-container">
+          <div class="section-title">
+            <span>Predefined Personas</span>
+            <span style="font-size: 0.72rem; color: var(--text-subtle); font-weight: 500;">OOP Rubric Scenarios</span>
+          </div>
+          <div class="presets-grid" id="presetsGrid">
+            <!-- Populated via app.js -->
+          </div>
+        </div>
+
+        <form id="studentForm" onsubmit="handleFormSubmit(event)">
+          <div class="section-title">
+            <span>Student Academic Profile</span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="inpName">Candidate Full Name</label>
+            <input type="text" id="inpName" class="form-input" required value="Aarav Sharma">
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="inpAge">Age</label>
+              <input type="number" id="inpAge" class="form-input" min="16" max="60" required value="20">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="inpGender">Gender</label>
+              <select id="inpGender" class="form-select">
+                <option value="MALE" selected>Male</option>
+                <option value="FEMALE">Female</option>
+                <option value="OTHER">Other</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="inpBranch">Branch</label>
+              <select id="inpBranch" class="form-select">
+                <option value="CSE">CSE (Computer Science)</option>
+                <option value="IT" selected>IT (Information Tech)</option>
+                <option value="ECE">ECE (Electronics)</option>
+                <option value="EE">EE (Electrical)</option>
+                <option value="ME">ME (Mechanical)</option>
+                <option value="CE">CE (Civil)</option>
+                <option value="CHEM">Chemical</option>
+                <option value="OTHER_ENG">Other Engineering</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="inpYear">Current Year</label>
+              <select id="inpYear" class="form-select">
+                <option value="1">Year 1 (Freshman)</option>
+                <option value="2" selected>Year 2 (Sophomore)</option>
+                <option value="3">Year 3 (Pre-final)</option>
+                <option value="4">Year 4 (Final Year)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="inpCgpa">CGPA (0.0 - 10.0)</label>
+              <input type="number" id="inpCgpa" class="form-input" step="0.01" min="0" max="10" required value="8.50">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="inpBacklogs">Active Backlogs</label>
+              <input type="number" id="inpBacklogs" class="form-input" min="0" max="20" required value="0">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="inpCategory">Reservation Category</label>
+            <select id="inpCategory" class="form-select">
+              <option value="GENERAL" selected>General / Unreserved</option>
+              <option value="EWS">Economically Weaker Section (EWS)</option>
+              <option value="OBC_NCL">OBC (Non-Creamy Layer)</option>
+              <option value="SC">Scheduled Caste (SC)</option>
+              <option value="ST">Scheduled Tribe (ST)</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="inpTenth">10th Std (%)</label>
+              <input type="number" id="inpTenth" class="form-input" step="0.1" min="0" max="100" value="91.5">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="inpTwelfth">12th Std (%)</label>
+              <input type="number" id="inpTwelfth" class="form-input" step="0.1" min="0" max="100" value="89.0">
+            </div>
+          </div>
+
+          <button type="submit" class="btn-primary" id="btnEvaluate">
+            <svg class="icon" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            Evaluate Eligibility
+          </button>
+        </form>
+      </aside>
+
+      <!-- Right Column: Evaluation Dashboard -->
+      <main class="results-container">
+        <!-- Summary Strip -->
+        <div class="glass-panel student-summary-strip" id="studentSummaryStrip">
+          <div class="student-title-block">
+            <h2 id="summaryStudentName">Aarav Sharma</h2>
+            <div class="student-subtitle" id="summaryStudentMeta">Information Technology &bull; Year 2 &bull; CGPA 8.50 (80.8%) &bull; 0 Backlogs</div>
+          </div>
+          <div class="stats-badges">
+            <div class="metric-pill eligible">
+              <span id="badgeEligibleCount">0</span> Pathways Eligible
+            </div>
+            <div class="metric-pill shortfall">
+              <span id="badgeShortfallCount">12</span> Shortfalls Identified
+            </div>
+          </div>
+        </div>
+
+        <!-- Section: Eligible Pathways -->
+        <section class="glass-panel pathway-section">
+          <div class="section-title">
+            <span style="color: #166534;">Eligible Career Pathways</span>
+            <span id="eligibleSectionMeta" style="font-size: 0.78rem; font-weight: 500; color: var(--text-subtle);">Direct Qualification</span>
+          </div>
+          <div class="pathway-cards-grid" id="eligibleCardsGrid">
+            <!-- Injected via app.js -->
+          </div>
+        </section>
+
+        <!-- Section: Actionable Shortfalls -->
+        <section class="glass-panel pathway-section">
+          <div class="section-title">
+            <span style="color: #92400e;">Restricted Pathways & Actionable Shortfalls</span>
+            <span id="shortfallSectionMeta" style="font-size: 0.78rem; font-weight: 500; color: var(--text-subtle);">Targeted Gap Analysis</span>
+          </div>
+          <div class="pathway-cards-grid" id="shortfallCardsGrid">
+            <!-- Injected via app.js -->
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- TAB 2: MULTITHREADED BATCH MONITOR -->
+    <div id="batchView" style="display: none;">
+      <div class="glass-panel" style="padding: 24px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+          <div>
+            <h2 style="font-size: 1.25rem; color: var(--brand-navy); font-weight: 700;">Multithreaded Batch Evaluation Engine</h2>
+            <p style="font-size: 0.84rem; color: var(--text-muted);">Processes student profiles concurrently from CSV using Java ExecutorService & Futures.</p>
+          </div>
+          <button class="btn-secondary" onclick="loadBatchSample()">
+            <svg class="icon" viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+            Trigger Parallel Run
+          </button>
+        </div>
+
+        <div style="display: flex; gap: 16px; margin-bottom: 20px;">
+          <div class="metric-pill" style="background:#f1f5f9; border: 1px solid var(--border-glass);">
+            <span>Students: <strong id="batchMetricStudents">0</strong></span>
+          </div>
+          <div class="metric-pill" style="background:#f1f5f9; border: 1px solid var(--border-glass);">
+            <span>Evaluations: <strong id="batchMetricEvaluated">0</strong></span>
+          </div>
+          <div class="metric-pill" style="background:#f1f5f9; border: 1px solid var(--border-glass);">
+            <span>Duration: <strong id="batchMetricDuration">0 ms</strong></span>
+          </div>
+          <div class="metric-pill" style="background:#f1f5f9; border: 1px solid var(--border-glass);">
+            <span>Workers: <strong id="batchMetricThreads">0 Threads</strong></span>
+          </div>
+        </div>
+
+        <div class="data-table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Student ID</th>
+                <th>Name</th>
+                <th>Branch</th>
+                <th>Year</th>
+                <th>CGPA</th>
+                <th>Active Backlogs</th>
+                <th>Eligible Count</th>
+                <th>Shortfall Count</th>
+              </tr>
+            </thead>
+            <tbody id="batchTableBody">
+              <tr><td colspan="8" style="text-align: center; color: var(--text-subtle);">Click 'Trigger Parallel Run' to execute multithreaded evaluation.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: EXAM CATALOG & CRITERIA -->
+    <div id="catalogView" style="display: none;">
+      <div class="glass-panel" style="padding: 24px;">
+        <div class="section-title">
+          <span>Registered Competitive Pathways Catalog</span>
+          <span style="font-size: 0.8rem; font-weight: 500; color: var(--text-subtle);">Dynamic Rule Registry</span>
+        </div>
+        <div class="data-table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Code</th>
+                <th>Exam Name</th>
+                <th>Category</th>
+                <th>Conducting Body</th>
+                <th>Min Year</th>
+                <th>Min CGPA</th>
+                <th>Max Age</th>
+                <th>Max Backlogs</th>
+              </tr>
+            </thead>
+            <tbody id="catalogTableBody">
+              <!-- Injected via app.js -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4: AUDIT LOG VIEWER -->
+    <div id="logsView" style="display: none;">
+      <div class="glass-panel" style="padding: 24px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+          <div>
+            <h2 style="font-size: 1.15rem; color: var(--brand-navy); font-weight: 700;">Audit Trail & Evaluation Ledger</h2>
+            <p style="font-size: 0.8rem; color: var(--text-muted);">Real-time stream from Java backend file storage (<code>data/audit_logs.txt</code>)</p>
+          </div>
+          <button class="btn-secondary" onclick="loadAuditLogs()">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.3"/></svg>
+            Refresh Logs
+          </button>
+        </div>
+        <pre class="log-stream" id="logContent">Loading audit logs from server...</pre>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
