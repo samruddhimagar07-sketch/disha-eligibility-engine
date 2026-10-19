@@ -1,0 +1,12 @@
+# DISHA - Sample Undergraduate Student Profiles for Batch Testing
+# Format: id,name,email,age,branch,currentYear,cgpa,category,activeBacklogs,historyOfBacklogs,tenthPct,twelfthPct,gender,degreeCompleted
+STU-101,Aarav Sharma,aarav.sharma@eng.edu,20,IT,2,8.50,GENERAL,0,0,91.5,89.0,MALE,false
+STU-102,Diya Patel,diya.patel@eng.edu,20,IT,2,6.80,OBC_NCL,2,2,84.0,82.5,FEMALE,false
+STU-103,Rohan Verma,rohan.verma@eng.edu,22,CSE,4,6.20,GENERAL,2,3,78.0,75.0,MALE,false
+STU-104,Ananya Iyer,ananya.iyer@eng.edu,21,ME,3,9.10,GENERAL,0,0,94.0,92.0,FEMALE,false
+STU-105,Vikram Singh,vikram.singh@eng.edu,23,ECE,4,7.85,SC,0,1,82.0,80.0,MALE,false
+STU-106,Neha Gupta,neha.gupta@eng.edu,21,IT,3,7.40,EWS,0,0,88.0,86.0,FEMALE,false
+STU-107,Karthik Nair,karthik.nair@eng.edu,24,CE,4,6.40,OBC_NCL,1,2,76.0,74.0,MALE,true
+STU-108,Meera Joshi,meera.joshi@eng.edu,19,EE,2,8.90,GENERAL,0,0,93.0,91.5,FEMALE,false
+STU-109,Rahul Deshmukh,rahul.deshmukh@eng.edu,22,CSE,4,8.80,GENERAL,0,0,95.0,94.0,MALE,false
+STU-110,Pooja Sundaram,pooja.sundaram@eng.edu,21,IT,3,6.10,ST,1,1,72.0,70.0,FEMALE,false
