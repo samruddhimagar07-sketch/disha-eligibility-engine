@@ -5,3 +5,11 @@ dist/
 !.env.example
 *.log
 backend/bin/
+node_modules/
+**/node_modules/
+.env
+.env.*
+!.env.example
+backend/bin/
+*.class
+dist/
