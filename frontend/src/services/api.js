@@ -23,7 +23,7 @@ export async function evaluateStudent(studentProfile) {
 
 export async function runBatchEvaluation() {
   const response = await fetch(`${API_BASE}/api/batch-sample`);
-  if (!response.ok) throw new Error('Multithreaded batch evaluation failed');
+  if (!response.ok) throw new Error('Batch evaluation failed');
   return response.json();
 }
 
@@ -69,11 +69,5 @@ export async function fetchPathways() {
 export async function fetchDemoProfiles() {
   const response = await fetch(`${API_BASE}/api/demo-profiles`);
   if (!response.ok) throw new Error('Failed to load demo student profiles');
-  return response.json();
-}
-
-export async function fetchAuditLogs() {
-  const response = await fetch(`${API_BASE}/api/logs`);
-  if (!response.ok) throw new Error('Failed to fetch audit log trail');
   return response.json();
 }

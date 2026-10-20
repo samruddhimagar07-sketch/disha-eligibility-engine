@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Sliders, Sparkles, CheckCircle2, TrendingUp, ArrowRight, Zap } from 'lucide-react';
+import { Sliders, Sparkles, CheckCircle2, TrendingUp, ArrowRight, Zap } from './Icon';
 
 export default function WhatIfSimulator({ currentStudent, onApplySimulation, onRunEvaluation }) {
   const [simCgpa, setSimCgpa] = useState(currentStudent.cgpa || 7.5);
@@ -33,30 +33,30 @@ export default function WhatIfSimulator({ currentStudent, onApplySimulation, onR
   };
 
   return (
-    <div className="flat-card" style={{ maxWidth: '900px', margin: '0 auto' }}>
+    <div className="flat-card mx-auto w-full max-w-4xl !bg-surface-container-lowest ring-1 ring-outline-variant/30">
       <div className="card-title-bar">
         <h3>
-          <Sliders size={22} color="#3b82f6" />
+          <Sliders size={22} color="#005a69" />
           Interactive Eligibility Simulator ("What-If" Analysis)
         </h3>
-        <span className="brand-tag" style={{ backgroundColor: '#10b981' }}>
+        <span className="brand-tag" style={{ backgroundColor: '#8b5000' }}>
           Live Projections
         </span>
       </div>
 
-      <p style={{ color: '#4b5563', marginBottom: '24px', fontSize: '0.95rem' }}>
+      <p style={{ color: '#3f484b', marginBottom: '24px', fontSize: '0.95rem' }}>
         Test how improving your academic metrics (e.g. clearing active backlogs, scoring higher CGPA in upcoming semesters, or moving to Year 4) instantly unlocks competitive and higher study examinations.
       </p>
 
       {/* Simulator Sliders */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px', marginBottom: '28px' }}>
+      <div className="mb-space-xl grid grid-cols-1 gap-space-lg md:grid-cols-2">
         {/* CGPA Slider */}
-        <div style={{ backgroundColor: '#eff6ff', border: '2px solid #3b82f6', borderRadius: '8px', padding: '16px' }}>
+        <div style={{ backgroundColor: '#e9f5ff', border: '1px solid #005a69', borderRadius: '20px', padding: '16px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
-            <label style={{ fontWeight: 800, fontSize: '0.9rem', color: '#1e40af' }}>
+            <label style={{ fontWeight: 800, fontSize: '0.9rem', color: '#004e5c' }}>
               Projected CGPA
             </label>
-            <span style={{ fontSize: '1.4rem', fontWeight: 900, color: '#1d4ed8' }}>
+            <span style={{ fontSize: '1.4rem', fontWeight: 900, color: '#005a69' }}>
               {simCgpa}
             </span>
           </div>
@@ -69,23 +69,23 @@ export default function WhatIfSimulator({ currentStudent, onApplySimulation, onR
             onChange={(e) => setSimCgpa(parseFloat(e.target.value))}
             style={{ width: '100%', cursor: 'pointer' }}
           />
-          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', color: '#6b7280', marginTop: '6px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', color: '#6f797c', marginTop: '6px' }}>
             <span>5.0</span>
             <span>Current: {currentStudent.cgpa}</span>
             <span>10.0</span>
           </div>
-          <div style={{ fontSize: '0.8rem', fontWeight: 700, color: cgpaDelta >= 0 ? '#059669' : '#dc2626', marginTop: '8px' }}>
+          <div style={{ fontSize: '0.8rem', fontWeight: 700, color: cgpaDelta >= 0 ? '#059669' : '#ba1a1a', marginTop: '8px' }}>
             {cgpaDelta >= 0 ? `+${cgpaDelta} CGPA improvement` : `${cgpaDelta} CGPA decrease`}
           </div>
         </div>
 
         {/* Backlogs Slider */}
-        <div style={{ backgroundColor: '#fffbeb', border: '2px solid #f59e0b', borderRadius: '8px', padding: '16px' }}>
+        <div style={{ backgroundColor: '#fce7d6', border: '1px solid #fea443', borderRadius: '20px', padding: '16px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
-            <label style={{ fontWeight: 800, fontSize: '0.9rem', color: '#b45309' }}>
+            <label style={{ fontWeight: 800, fontSize: '0.9rem', color: '#8b5000' }}>
               Target Active Backlogs
             </label>
-            <span style={{ fontSize: '1.4rem', fontWeight: 900, color: '#b45309' }}>
+            <span style={{ fontSize: '1.4rem', fontWeight: 900, color: '#8b5000' }}>
               {simBacklogs}
             </span>
           </div>
@@ -98,12 +98,12 @@ export default function WhatIfSimulator({ currentStudent, onApplySimulation, onR
             onChange={(e) => setSimBacklogs(parseInt(e.target.value, 10))}
             style={{ width: '100%', cursor: 'pointer' }}
           />
-          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', color: '#6b7280', marginTop: '6px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', color: '#6f797c', marginTop: '6px' }}>
             <span>0 (All Cleared)</span>
             <span>Current: {currentStudent.activeBacklogs}</span>
             <span>5</span>
           </div>
-          <div style={{ fontSize: '0.8rem', fontWeight: 700, color: backlogDelta > 0 ? '#059669' : '#6b7280', marginTop: '8px' }}>
+          <div style={{ fontSize: '0.8rem', fontWeight: 700, color: backlogDelta > 0 ? '#059669' : '#6f797c', marginTop: '8px' }}>
             {backlogDelta > 0 ? `Clearing ${backlogDelta} active backlog(s)` : 'No backlog reduction'}
           </div>
         </div>
@@ -114,7 +114,7 @@ export default function WhatIfSimulator({ currentStudent, onApplySimulation, onR
         <label style={{ display: 'block', fontWeight: 800, fontSize: '0.85rem', textTransform: 'uppercase', marginBottom: '8px' }}>
           Simulated Academic Year of Study
         </label>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '10px' }}>
+        <div className="grid grid-cols-2 gap-space-sm md:grid-cols-4">
           {[1, 2, 3, 4].map((yr) => (
             <button
               key={yr}

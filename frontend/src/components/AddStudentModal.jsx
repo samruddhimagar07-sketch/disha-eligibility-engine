@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, UserPlus, CheckCircle2 } from 'lucide-react';
+import { X, UserPlus, CheckCircle2 } from './Icon';
 
 export default function AddStudentModal({ onClose, onAddStudent }) {
   const [formData, setFormData] = useState({
@@ -41,7 +41,7 @@ export default function AddStudentModal({ onClose, onAddStudent }) {
       <div className="modal-dialog" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
           <div>
-            <span className="brand-tag" style={{ backgroundColor: '#3b82f6', marginBottom: '6px', display: 'inline-block' }}>
+            <span className="brand-tag" style={{ backgroundColor: '#005a69', marginBottom: '6px', display: 'inline-block' }}>
               Batch Enrollment
             </span>
             <h2>Add Student to Batch Roster</h2>
@@ -52,7 +52,7 @@ export default function AddStudentModal({ onClose, onAddStudent }) {
         </div>
 
         {error && (
-          <div style={{ backgroundColor: '#fef2f2', border: '2px solid #ef4444', color: '#991b1b', padding: '10px 14px', borderRadius: '6px', marginBottom: '16px', fontWeight: 700, fontSize: '0.85rem' }}>
+          <div style={{ backgroundColor: '#ffdad6', border: '1px solid #ba1a1a', color: '#93000a', padding: '10px 14px', borderRadius: '16px', marginBottom: '16px', fontWeight: 700, fontSize: '0.85rem' }}>
             {error}
           </div>
         )}
@@ -174,7 +174,7 @@ export default function AddStudentModal({ onClose, onAddStudent }) {
             </button>
             <button type="submit" className="btn btn-primary" disabled={submitting}>
               <UserPlus size={18} />
-              <span>{submitting ? 'Adding...' : 'Add to Batch CSV & Evaluate'}</span>
+              <span>{submitting ? 'Adding...' : 'Add to Batch & Evaluate'}</span>
             </button>
           </div>
         </form>

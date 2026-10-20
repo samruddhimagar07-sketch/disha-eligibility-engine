@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, Send, Sparkles, AlertCircle, Users, CheckCircle2 } from 'lucide-react';
+import { X, Send, Sparkles, AlertCircle, Users, CheckCircle2 } from './Icon';
 
 const BROADCAST_TEMPLATES = [
   {
@@ -100,7 +100,7 @@ export default function BroadcastModal({
       const res = await onSendNotification(payload);
       setFeedback({
         success: true,
-        text: `Broadcast sent successfully to ${recipientIds.length} students! Stored on disk via Core Java NIO.`
+        text: `Broadcast sent successfully to ${recipientIds.length} students!`
       });
       setTimeout(() => {
         onClose();
@@ -125,7 +125,7 @@ export default function BroadcastModal({
               Faculty Broadcast Dispatcher
             </span>
             <h2>Informing & Notifying Eligible Students</h2>
-            <div style={{ fontSize: '0.85rem', color: '#6b7280', fontWeight: 600 }}>
+            <div style={{ fontSize: '0.85rem', color: '#6f797c', fontWeight: 600 }}>
               Broadcasting to <strong>{recipientIds.length} targeted students</strong>
             </div>
           </div>
@@ -136,7 +136,7 @@ export default function BroadcastModal({
 
         {/* Quick Templates Selector */}
         <div style={{ marginBottom: '20px' }}>
-          <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase', marginBottom: '8px', color: '#6b7280' }}>
+          <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase', marginBottom: '8px', color: '#6f797c' }}>
             <Sparkles size={13} style={{ display: 'inline', marginRight: 4 }} />
             Quick Faculty Notice Templates (Click to fill)
           </label>
@@ -208,18 +208,18 @@ export default function BroadcastModal({
           {/* Recipient Preview Box */}
           <div
             style={{
-              backgroundColor: '#eff6ff',
-              border: '2px solid #3b82f6',
-              borderRadius: '8px',
+              backgroundColor: '#e9f5ff',
+              border: '1px solid #005a69',
+              borderRadius: '20px',
               padding: '12px 16px',
               marginBottom: '20px'
             }}
           >
-            <div style={{ fontWeight: 800, fontSize: '0.85rem', color: '#1e40af', marginBottom: '6px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <div style={{ fontWeight: 800, fontSize: '0.85rem', color: '#004e5c', marginBottom: '6px', display: 'flex', alignItems: 'center', gap: '8px' }}>
               <Users size={16} />
               Recipient Manifest ({recipientIds.length} Students)
             </div>
-            <div style={{ fontSize: '0.8rem', color: '#374151', wordBreak: 'break-word' }}>
+            <div style={{ fontSize: '0.8rem', color: '#3f484b', wordBreak: 'break-word' }}>
               {targetStudents && targetStudents.length > 0 ? (
                 targetStudents.map((s) => `${s.name} (${s.id})`).join(', ')
               ) : (
@@ -233,11 +233,11 @@ export default function BroadcastModal({
             <div
               style={{
                 padding: '12px',
-                borderRadius: '6px',
+                borderRadius: '16px',
                 marginBottom: '16px',
-                backgroundColor: feedback.success ? '#ecfdf5' : '#fef2f2',
-                border: `2px solid ${feedback.success ? '#10b981' : '#ef4444'}`,
-                color: feedback.success ? '#065f46' : '#991b1b',
+                backgroundColor: feedback.success ? '#ecfdf5' : '#ffdad6',
+                border: `2px solid ${feedback.success ? '#10b981' : '#ba1a1a'}`,
+                color: feedback.success ? '#065f46' : '#93000a',
                 fontWeight: 700,
                 fontSize: '0.9rem'
               }}

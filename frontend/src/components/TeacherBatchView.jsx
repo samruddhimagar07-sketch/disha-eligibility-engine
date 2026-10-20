@@ -12,7 +12,7 @@ import {
   Users,
   Award,
   BookOpen
-} from 'lucide-react';
+} from './Icon';
 
 export default function TeacherBatchView({
   batchData,
@@ -29,16 +29,16 @@ export default function TeacherBatchView({
   if (!batchData || !batchData.students) {
     return (
       <div className="flat-card" style={{ textAlign: 'center', padding: '60px 20px' }}>
-        <Cpu size={48} color="#3b82f6" style={{ margin: '0 auto 16px' }} />
-        <h3>Loading Multithreaded Batch Roster...</h3>
-        <p style={{ color: '#6b7280', marginTop: '8px' }}>
-          Querying Java backend concurrent evaluation engine.
+        <Cpu size={48} color="#005a69" style={{ margin: '0 auto 16px' }} />
+        <h3>Loading Batch Roster...</h3>
+        <p style={{ color: '#6f797c', marginTop: '8px' }}>
+          Evaluating every candidate against all exam programs.
         </p>
       </div>
     );
   }
 
-  const { totalStudents, totalEvaluated, durationMillis, threadsUsed, students } = batchData;
+  const { totalStudents, totalEvaluated, students } = batchData;
 
   // Multi-criteria filter
   const filteredStudents = students.filter((s) => {
@@ -85,41 +85,35 @@ export default function TeacherBatchView({
 
   return (
     <div>
-      {/* Concurrency Performance Banner */}
-      <div className="concurrency-banner">
-        <div className="concurrency-title">
+      {/* Batch overview banner */}
+      <div className="overview-banner">
+        <div className="overview-title">
           <div
             style={{
-              backgroundColor: '#3b82f6',
-              padding: '10px',
-              borderRadius: '6px',
+              backgroundColor: 'rgba(0,0,0,0.15)',
+              padding: '12px',
+              borderRadius: '9999px',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center'
             }}
           >
-            <Cpu size={28} color="#ffffff" />
+            <Cpu size={26} color="#ffffff" />
           </div>
           <div>
-            <h3>Multithreaded Concurrent Batch Processing</h3>
-            <p style={{ fontSize: '0.82rem', color: '#9ca3af' }}>
-              Core Java Virtual Threads concurrency engine evaluating candidate profiles concurrently.
+            <h3>Batch Eligibility Overview</h3>
+            <p style={{ fontSize: '0.82rem', color: 'rgba(255,255,255,0.85)' }}>
+              Every candidate in the roster evaluated against all exam programs.
             </p>
           </div>
         </div>
 
-        <div className="concurrency-chips">
-          <div className="metric-chip">
-            <strong>{durationMillis || 12} ms</strong> Execution Time
-          </div>
-          <div className="metric-chip">
-            <strong>{threadsUsed || 16}</strong> Worker Threads
-          </div>
+        <div className="overview-chips">
           <div className="metric-chip">
             <strong>{totalEvaluated || 160}</strong> Exams Evaluated
           </div>
-          <div className="metric-chip" style={{ backgroundColor: '#10b981', color: '#ffffff', borderColor: '#059669' }}>
-            <strong style={{ color: '#ffffff' }}>{totalStudents}</strong> Students Processed
+          <div className="metric-chip" style={{ backgroundColor: 'rgba(255,255,255,0.9)', color: '#005a69' }}>
+            <strong style={{ color: '#8b5000' }}>{totalStudents}</strong> Students Processed
           </div>
         </div>
       </div>
@@ -129,7 +123,7 @@ export default function TeacherBatchView({
         <div style={{ display: 'flex', alignItems: 'center', gap: '14px', flexWrap: 'wrap' }}>
           {/* Search box */}
           <div className="search-box">
-            <Search size={16} color="#6b7280" />
+            <Search size={16} color="#6f797c" />
             <input
               type="text"
               placeholder="Search by student name or ID..."
@@ -221,7 +215,7 @@ export default function TeacherBatchView({
             className="btn btn-secondary"
             onClick={onRefreshBatch}
             disabled={isLoading}
-            title="Re-run batch concurrency engine"
+            title="Refresh batch roster"
           >
             <RotateCw size={16} className={isLoading ? 'spin' : ''} />
           </button>
@@ -248,7 +242,7 @@ export default function TeacherBatchView({
           <tbody>
             {filteredStudents.length === 0 ? (
               <tr>
-                <td colSpan={10} style={{ textAlign: 'center', padding: '40px', color: '#6b7280' }}>
+                <td colSpan={10} style={{ textAlign: 'center', padding: '40px', color: '#6f797c' }}>
                   No students found matching current search and filter criteria.
                 </td>
               </tr>
@@ -257,15 +251,15 @@ export default function TeacherBatchView({
                 <tr key={s.id}>
                   <td style={{ fontWeight: 800 }}>{s.id}</td>
                   <td>
-                    <div style={{ fontWeight: 800, color: '#111827' }}>{s.name}</div>
-                    <div style={{ fontSize: '0.75rem', color: '#6b7280' }}>{s.email}</div>
+                    <div style={{ fontWeight: 800, color: '#001e2c' }}>{s.name}</div>
+                    <div style={{ fontSize: '0.75rem', color: '#6f797c' }}>{s.email}</div>
                   </td>
                   <td>
                     <span
                       style={{
-                        backgroundColor: '#f3f4f6',
-                        padding: '3px 8px',
-                        borderRadius: '4px',
+                        backgroundColor: '#ddf1ff',
+                        padding: '3px 10px',
+                        borderRadius: '9999px',
                         fontWeight: 700,
                         fontSize: '0.8rem'
                       }}
@@ -277,7 +271,7 @@ export default function TeacherBatchView({
                   <td>
                     <strong
                       style={{
-                        color: s.cgpa >= 8.0 ? '#10b981' : s.cgpa >= 6.5 ? '#111827' : '#ef4444'
+                        color: s.cgpa >= 8.0 ? '#10b981' : s.cgpa >= 6.5 ? '#001e2c' : '#ba1a1a'
                       }}
                     >
                       {s.cgpa.toFixed(2)}
@@ -287,10 +281,10 @@ export default function TeacherBatchView({
                     {s.activeBacklogs > 0 ? (
                       <span
                         style={{
-                          backgroundColor: '#fef2f2',
-                          color: '#dc2626',
+                          backgroundColor: '#ffdad6',
+                          color: '#ba1a1a',
                           padding: '2px 8px',
-                          borderRadius: '4px',
+                          borderRadius: '9999px',
                           fontWeight: 800,
                           fontSize: '0.8rem'
                         }}
@@ -310,7 +304,7 @@ export default function TeacherBatchView({
                         backgroundColor: '#ecfdf5',
                         color: '#065f46',
                         padding: '4px 10px',
-                        borderRadius: '4px',
+                        borderRadius: '9999px',
                         fontWeight: 800,
                         fontSize: '0.82rem',
                         border: '1px solid #a7f3d0'
@@ -322,13 +316,13 @@ export default function TeacherBatchView({
                   <td>
                     <span
                       style={{
-                        backgroundColor: '#fffbeb',
-                        color: '#92400e',
+                        backgroundColor: '#fce7d6',
+                        color: '#8b5000',
                         padding: '4px 10px',
-                        borderRadius: '4px',
+                        borderRadius: '9999px',
                         fontWeight: 800,
                         fontSize: '0.82rem',
-                        border: '1px solid #fde68a'
+                        border: '1px solid #ffdcbf'
                       }}
                     >
                       {s.shortfallCount} Shortfalls

@@ -1,5 +1,5 @@
 import React from 'react';
-import { TrendingUp, AlertTriangle, CheckCircle2, Award, Users, BookOpen } from 'lucide-react';
+import { TrendingUp, AlertTriangle, CheckCircle2, Award, Users, BookOpen } from './Icon';
 
 export default function TeacherAnalyticsView({ batchData }) {
   if (!batchData || !batchData.students) {
@@ -54,25 +54,25 @@ export default function TeacherAnalyticsView({ batchData }) {
   ];
 
   return (
-    <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
+    <div className="w-full">
       {/* Top Stat Cards */}
-      <div className="summary-banner" style={{ marginBottom: '24px' }}>
-        <div className="stat-block" style={{ backgroundColor: '#ffffff' }}>
+      <div className="summary-banner mb-space-lg">
+        <div className="stat-block ring-1 ring-outline-variant/40" style={{ backgroundColor: '#ffffff' }}>
           <div className="stat-label">Batch Size</div>
           <div className="stat-number">{total}</div>
-          <div className="stat-sub" style={{ color: '#6b7280' }}>
+          <div className="stat-sub" style={{ color: '#6f797c' }}>
             Enrolled Candidates
           </div>
         </div>
 
-        <div className="stat-block" style={{ backgroundColor: '#eff6ff', borderColor: '#3b82f6' }}>
-          <div className="stat-label" style={{ color: '#1d4ed8' }}>
+        <div className="stat-block" style={{ backgroundColor: '#e9f5ff', borderColor: '#005a69' }}>
+          <div className="stat-label" style={{ color: '#005a69' }}>
             Batch Average CGPA
           </div>
-          <div className="stat-number" style={{ color: '#2563eb' }}>
+          <div className="stat-number" style={{ color: '#005a69' }}>
             {avgCgpa}
           </div>
-          <div className="stat-sub" style={{ color: '#1d4ed8' }}>
+          <div className="stat-sub" style={{ color: '#005a69' }}>
             Across all engineering streams
           </div>
         </div>
@@ -89,28 +89,28 @@ export default function TeacherAnalyticsView({ batchData }) {
           </div>
         </div>
 
-        <div className="stat-block" style={{ backgroundColor: '#fffbeb', borderColor: '#f59e0b' }}>
-          <div className="stat-label" style={{ color: '#b45309' }}>
+        <div className="stat-block" style={{ backgroundColor: '#fce7d6', borderColor: '#fea443' }}>
+          <div className="stat-label" style={{ color: '#8b5000' }}>
             Active Arrears Risk
           </div>
-          <div className="stat-number" style={{ color: '#f59e0b' }}>
+          <div className="stat-number" style={{ color: '#8b5000' }}>
             {studentsWithBacklogs.length}
           </div>
-          <div className="stat-sub" style={{ color: '#b45309' }}>
+          <div className="stat-sub" style={{ color: '#8b5000' }}>
             Candidates need remedial help
           </div>
         </div>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '24px', alignItems: 'start' }}>
+      <div className="grid grid-cols-1 items-start gap-space-lg lg:grid-cols-[1.2fr_1fr]">
         {/* Exam Readiness Breakdown */}
         <div className="flat-card">
           <div className="card-title-bar">
             <h3>
-              <TrendingUp size={20} color="#3b82f6" />
+              <TrendingUp size={20} color="#005a69" />
               Batch Competitive Exam Readiness
             </h3>
-            <span style={{ fontSize: '0.8rem', fontWeight: 800, color: '#6b7280' }}>
+            <span style={{ fontSize: '0.8rem', fontWeight: 800, color: '#6f797c' }}>
               % OF BATCH ELIGIBLE
             </span>
           </div>
@@ -131,10 +131,9 @@ export default function TeacherAnalyticsView({ batchData }) {
                   {/* Flat progress bar */}
                   <div
                     style={{
-                      height: '14px',
-                      backgroundColor: '#f3f4f6',
-                      border: '2px solid #111827',
-                      borderRadius: '4px',
+                      height: '12px',
+                      backgroundColor: '#d0ecff',
+                      borderRadius: '9999px',
                       overflow: 'hidden'
                     }}
                   >
@@ -143,7 +142,7 @@ export default function TeacherAnalyticsView({ batchData }) {
                         height: '100%',
                         width: `${pct}%`,
                         backgroundColor:
-                          pct >= 60 ? '#10b981' : pct >= 40 ? '#3b82f6' : '#f59e0b'
+                          pct >= 60 ? '#1e7385' : pct >= 40 ? '#005a69' : '#fea443'
                       }}
                     />
                   </div>
@@ -156,16 +155,16 @@ export default function TeacherAnalyticsView({ batchData }) {
         {/* Remedial Attention Watchlist */}
         <div className="flat-card">
           <div className="card-title-bar">
-            <h3 style={{ color: '#b45309' }}>
-              <AlertTriangle size={20} color="#f59e0b" />
+            <h3 style={{ color: '#8b5000' }}>
+              <AlertTriangle size={20} color="#fea443" />
               Arrears & Remedial Watchlist
             </h3>
             <span
               style={{
-                backgroundColor: '#fef2f2',
-                color: '#dc2626',
+                backgroundColor: '#ffdad6',
+                color: '#ba1a1a',
                 padding: '2px 8px',
-                borderRadius: '4px',
+                borderRadius: '9999px',
                 fontWeight: 800,
                 fontSize: '0.75rem'
               }}
@@ -173,7 +172,7 @@ export default function TeacherAnalyticsView({ batchData }) {
               {studentsWithBacklogs.length} Students
             </span>
           </div>
-          <p style={{ fontSize: '0.82rem', color: '#6b7280', marginBottom: '14px' }}>
+          <p style={{ fontSize: '0.82rem', color: '#6f797c', marginBottom: '14px' }}>
             These students are barred from strict recruitment drives (PSUs, CDS, Global Admissions) until active arrears are cleared.
           </p>
 
@@ -182,9 +181,9 @@ export default function TeacherAnalyticsView({ batchData }) {
               <div
                 key={s.id}
                 style={{
-                  backgroundColor: '#fffbeb',
-                  border: '2px solid #fde68a',
-                  borderRadius: '6px',
+                  backgroundColor: '#fce7d6',
+                  border: '1px solid #ffdcbf',
+                  borderRadius: '16px',
                   padding: '10px 14px',
                   display: 'flex',
                   justifyContent: 'space-between',
@@ -193,19 +192,19 @@ export default function TeacherAnalyticsView({ batchData }) {
               >
                 <div>
                   <div style={{ fontWeight: 800, fontSize: '0.9rem' }}>{s.name}</div>
-                  <div style={{ fontSize: '0.75rem', color: '#6b7280' }}>
+                  <div style={{ fontSize: '0.75rem', color: '#6f797c' }}>
                     {s.branch} • Year {s.year} • CGPA {s.cgpa}
                   </div>
                 </div>
                 <div style={{ textAlign: 'right' }}>
                   <span
                     style={{
-                      backgroundColor: '#ef4444',
+                      backgroundColor: '#ba1a1a',
                       color: '#ffffff',
                       fontSize: '0.75rem',
                       fontWeight: 800,
                       padding: '2px 8px',
-                      borderRadius: '4px'
+                      borderRadius: '9999px'
                     }}
                   >
                     {s.activeBacklogs} Backlogs

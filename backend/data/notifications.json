@@ -1,0 +1,50 @@
+[
+  {
+    "id": "NOTIF-801",
+    "title": "UPSC Civil Services Mentorship & Mock Prelims Cohort",
+    "message": "Orientation session for 3rd and 4th year aspirants eligible for UPSC CSE. Prof. K. Sundaram will review general studies syllabus division and optional subject selection strategies in Seminar Hall 2 this Saturday at 10:00 AM.",
+    "sender": "Prof. K. Sundaram (Dean of Career Services)",
+    "targetExamCode": "UPSC-CSE",
+    "targetAudience": "Eligible for UPSC CSE (6 Students)",
+    "priority": "ACTION_REQUIRED",
+    "timestamp": "2026-10-18 09:30",
+    "read": false,
+    "recipientIds": ["STU-101", "STU-103", "STU-104", "STU-105", "STU-106", "STU-109"]
+  },
+  {
+    "id": "NOTIF-802",
+    "title": "CAT / MBA Summer Bootcamp & Quantitative Aptitude Series",
+    "message": "Exclusive invitation for high CGPA students eligible for IIM CAT 2026. Weekly speed arithmetic workshops and mock interviews will be conducted by alumni from IIM Ahmedabad.",
+    "sender": "Dr. Neha Kapoor (Management Guidance Cell)",
+    "targetExamCode": "CAT",
+    "targetAudience": "Eligible for CAT (IIMs)",
+    "priority": "INFO",
+    "timestamp": "2026-10-17 14:15",
+    "read": false,
+    "recipientIds": ["STU-101", "STU-104", "STU-105", "STU-106", "STU-108", "STU-109"]
+  },
+  {
+    "id": "NOTIF-803",
+    "title": "Urgent: Remedial Fast-Track Classes for Active Backlog Clearance",
+    "message": "All students with active backlogs in semesters 1-4 must register for remedial tutoring. Clearing arrears before semester 7 is mandatory for PSU recruitment and Defence NDA/CDS eligibility.",
+    "sender": "Prof. R. Deshpande (Academic Review Board)",
+    "targetExamCode": "REMEDIAL",
+    "targetAudience": "Students with Active Backlogs",
+    "priority": "URGENT",
+    "timestamp": "2026-10-16 11:00",
+    "read": false,
+    "recipientIds": ["STU-102", "STU-103", "STU-107", "STU-110"]
+  },
+  {
+    "id": "NOTIF-804",
+    "title": "Indian Armed Forces (CDS & AFCAT) SSB Screening Preparation",
+    "message": "Physical fitness and psychological screening practice session for CDS IMA/OTA and AFCAT eligible graduates. Colonel (Retd.) Verma will conduct SSB interview drills.",
+    "sender": "Col. (Retd.) S. Verma (Defence Academy Liason)",
+    "targetExamCode": "CDS-IMA",
+    "targetAudience": "Defence & AFCAT Aspirants",
+    "priority": "INFO",
+    "timestamp": "2026-10-15 16:45",
+    "read": false,
+    "recipientIds": ["STU-101", "STU-104", "STU-105", "STU-106", "STU-109"]
+  }
+]

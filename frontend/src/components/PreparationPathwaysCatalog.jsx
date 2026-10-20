@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BookOpen, Award, Compass, Briefcase, Shield, Globe, Building2, ChevronRight, CheckCircle2, ArrowRight } from 'lucide-react';
+import { BookOpen, Award, Compass, Briefcase, Shield, Globe, Building2, ChevronRight, CheckCircle2, ArrowRight } from './Icon';
 
 export default function PreparationPathwaysCatalog({ pathwaysData, onOpenPathwayModal }) {
   const [selectedExam, setSelectedExam] = useState('UPSC-CSE');
@@ -7,45 +7,49 @@ export default function PreparationPathwaysCatalog({ pathwaysData, onOpenPathway
   if (!pathwaysData) {
     return (
       <div className="flat-card" style={{ textAlign: 'center', padding: '60px 20px' }}>
-        <BookOpen size={48} color="#3b82f6" style={{ margin: '0 auto 16px' }} />
+        <BookOpen size={48} color="#005a69" style={{ margin: '0 auto 16px' }} />
         <h3>Loading Preparation Pathways...</h3>
       </div>
     );
   }
 
   const examKeys = Object.keys(pathwaysData);
+  if (examKeys.length === 0) {
+    return (
+      <div className="flat-card" style={{ textAlign: 'center', padding: '60px 20px' }}>
+        <BookOpen size={48} color="#005a69" style={{ margin: '0 auto 16px' }} />
+        <h3>No pathways for your stream yet</h3>
+        <p style={{ color: '#6f797c', marginTop: '8px' }}>
+          Evaluate your profile first, or pick another academic stream to see its preparation roadmaps.
+        </p>
+      </div>
+    );
+  }
   const currentPathway = pathwaysData[selectedExam] || pathwaysData[examKeys[0]];
 
   return (
     <div>
-      {/* Intro Color Block */}
-      <div
-        className="flat-card"
-        style={{
-          backgroundColor: '#eff6ff',
-          borderColor: '#3b82f6',
-          marginBottom: '24px'
-        }}
-      >
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '8px' }}>
-          <div style={{ backgroundColor: '#3b82f6', padding: '8px', borderRadius: '6px' }}>
-            <Compass size={24} color="#ffffff" />
-          </div>
-          <div>
-            <h2 style={{ fontSize: '1.35rem', fontWeight: 900, color: '#1e40af' }}>
-              Suggested Pathways & Roadmaps for Higher Studies & Exams
-            </h2>
-            <p style={{ fontSize: '0.88rem', color: '#1e3a8a' }}>
-              Phase-by-phase preparation strategies, standard reference books, milestone checklists, and study schedules curated for university students.
-            </p>
+      {/* Intro hero */}
+      <div className="relative mb-space-lg overflow-hidden rounded-lg bg-gradient-to-r from-[#175c6c] via-[#2a7b8e] to-[#edd3be] p-space-xl text-white shadow-sm">
+        <div className="relative z-10 flex flex-col gap-space-sm">
+          <span className="text-label-md uppercase tracking-widest text-white/80">Preparation Pathways</span>
+          <h2 className="text-headline-lg font-bold !text-white">Roadmaps for Higher Studies &amp; Exams</h2>
+          <p className="max-w-2xl text-body-lg text-white/90">
+            Phase-by-phase strategies, standard reference books, milestone checklists and study schedules curated for
+            university students.
+          </p>
+          <div className="mt-space-xs inline-flex w-fit items-center gap-space-sm rounded-full bg-black/15 px-space-md py-space-xs text-label-md backdrop-blur-md">
+            <Compass size={18} color="#ffdcbf" />
+            {examKeys.length} curated roadmaps
           </div>
         </div>
+        <Compass size={200} color="#ffffff" className="pointer-events-none absolute -right-4 -top-4 opacity-[0.12]" />
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '320px 1fr', gap: '24px', alignItems: 'start' }}>
+      <div className="grid grid-cols-1 items-start gap-space-lg xl:grid-cols-[320px_1fr]">
         {/* Left Column: Exam Pathway Nav */}
-        <div className="flat-card" style={{ padding: '16px' }}>
-          <div style={{ fontSize: '0.78rem', fontWeight: 800, textTransform: 'uppercase', color: '#6b7280', marginBottom: '12px' }}>
+        <div className="flat-card" style={{ padding: '20px' }}>
+          <div style={{ fontSize: '0.78rem', fontWeight: 800, textTransform: 'uppercase', color: '#6f797c', marginBottom: '12px' }}>
             Select Examination Roadmap
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
@@ -75,7 +79,7 @@ export default function PreparationPathwaysCatalog({ pathwaysData, onOpenPathway
           <div className="flat-card">
             <div className="card-title-bar">
               <div>
-                <span className="brand-tag" style={{ backgroundColor: '#10b981', marginBottom: '4px', display: 'inline-block' }}>
+                <span className="brand-tag" style={{ backgroundColor: '#8b5000', marginBottom: '4px', display: 'inline-block' }}>
                   Curated Roadmap
                 </span>
                 <h3>{currentPathway.examName}</h3>
@@ -91,16 +95,16 @@ export default function PreparationPathwaysCatalog({ pathwaysData, onOpenPathway
             </div>
 
             {/* Overview */}
-            <p style={{ fontSize: '0.95rem', color: '#374151', lineHeight: '1.6', marginBottom: '20px' }}>
+            <p style={{ fontSize: '0.95rem', color: '#3f484b', lineHeight: '1.6', marginBottom: '20px' }}>
               {currentPathway.overview}
             </p>
 
             {/* Timeline Tag */}
             <div
               style={{
-                backgroundColor: '#f3f4f6',
-                border: '2px solid #111827',
-                borderRadius: '6px',
+                backgroundColor: '#e9f5ff',
+                border: '1px solid #bec8cb',
+                borderRadius: '16px',
                 padding: '10px 14px',
                 marginBottom: '24px',
                 fontWeight: 700,
@@ -135,12 +139,12 @@ export default function PreparationPathwaysCatalog({ pathwaysData, onOpenPathway
             </div>
 
             {/* Recommended Books & Schedule */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-              <div style={{ backgroundColor: '#f9fafb', border: '2px solid #e5e7eb', borderRadius: '6px', padding: '14px' }}>
-                <div style={{ fontWeight: 800, fontSize: '0.85rem', marginBottom: '8px', color: '#111827' }}>
+            <div className="grid grid-cols-1 gap-space-md md:grid-cols-2">
+              <div style={{ backgroundColor: '#f5faff', border: '1px solid #bec8cb', borderRadius: '16px', padding: '14px' }}>
+                <div style={{ fontWeight: 800, fontSize: '0.85rem', marginBottom: '8px', color: '#001e2c' }}>
                   📚 Standard Textbooks
                 </div>
-                <ul style={{ listStyle: 'none', paddingLeft: 0, fontSize: '0.82rem', color: '#4b5563' }}>
+                <ul style={{ listStyle: 'none', paddingLeft: 0, fontSize: '0.82rem', color: '#3f484b' }}>
                   {currentPathway.recommendedBooks.map((b, idx) => (
                     <li key={idx} style={{ marginBottom: '4px' }}>
                       • {b}
@@ -149,11 +153,11 @@ export default function PreparationPathwaysCatalog({ pathwaysData, onOpenPathway
                 </ul>
               </div>
 
-              <div style={{ backgroundColor: '#ecfdf5', border: '2px solid #10b981', borderRadius: '6px', padding: '14px' }}>
+              <div style={{ backgroundColor: '#ecfdf5', border: '1px solid #10b981', borderRadius: '16px', padding: '14px' }}>
                 <div style={{ fontWeight: 800, fontSize: '0.85rem', marginBottom: '8px', color: '#065f46' }}>
                   📅 Study Routine
                 </div>
-                <p style={{ fontSize: '0.82rem', color: '#1f2937', lineHeight: '1.5' }}>
+                <p style={{ fontSize: '0.82rem', color: '#173342', lineHeight: '1.5' }}>
                   {currentPathway.studySchedule}
                 </p>
               </div>

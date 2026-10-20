@@ -70,23 +70,15 @@ graph TD
 
 ---
 
-### 3. Flat Design System Implementation
+### 3. EligiPath Design System Implementation
 
-The UI adheres strictly to the provided **Flat Design Philosophy**:
-- **Zero Artificial Depth**: No drop shadows (`shadow-none`), no bevels, no blurry backdrops (`backdrop-filter: none`), and no 3D illusions.
-- **Color as Structure**:
-  - Canvas: Pure White (`#FFFFFF`) on Light Neutral (`#F3F4F6`).
-  - High-Contrast Text: Sharp Gray 900 (`#111827`).
-  - Primary Action: Pure Digital Blue (`#3B82F6`).
-  - Positive / Eligible: Emerald Green (`#10B981`).
-  - Shortfall / Caution: Amber (`#F59E0B`).
-  - Urgent / Danger: Crimson Red (`#EF4444`).
-  - Dark Accent Sections: Dark Slate (`#1F2937`).
-- **Typography**: Geometric **'Outfit', sans-serif** from Google Fonts with bold headings (-0.02em tracking) and strong weight contrast.
-- **Snappy Motion Feedback**: Instant color shifts, button scaling (`hover:scale-105`), card scaling (`hover:scale-[1.02]`), and bold borders (`border-2` and `border-4`).
-- **Iconography**: `lucide-react` icons housed within solid colored geometric badge containers.
+The UI follows the EligiPath visual language, implemented with Tailwind CSS (`frontend/tailwind.config.js`):
+- **Shell**: fixed dark icon sidebar, floating blurred header with pill navigation, and a single large rounded content card.
+- **Surfaces**: soft tinted cards (2rem radius) in a teal / apricot / sand palette, with a teal-to-sand gradient hero.
+- **Controls**: pill-shaped buttons, chips and inputs; Material Symbols icons.
+- **Typography**: Plus Jakarta Sans.
+- **Data-driven dashboard**: the hero count, readiness gauge, cutoff chart, top matches and category readiness are all derived from the live evaluation result.
 
----
 
 ### 4. Core Java Backend & OOP Architecture
 

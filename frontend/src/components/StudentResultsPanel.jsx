@@ -11,7 +11,7 @@ import {
   Building2,
   Globe,
   SlidersHorizontal
-} from 'lucide-react';
+} from './Icon';
 
 export default function StudentResultsPanel({ evaluationData, onSelectPathway }) {
   const [filterCategory, setFilterCategory] = useState('ALL');
@@ -19,10 +19,10 @@ export default function StudentResultsPanel({ evaluationData, onSelectPathway })
   if (!evaluationData || !evaluationData.results) {
     return (
       <div className="flat-card" style={{ textAlign: 'center', padding: '60px 20px' }}>
-        <Compass size={48} color="#3b82f6" style={{ margin: '0 auto 16px' }} />
+        <Compass size={48} color="#005a69" style={{ margin: '0 auto 16px' }} />
         <h3>Submit Your Profile to Generate Eligibility</h3>
-        <p style={{ color: '#6b7280', marginTop: '8px' }}>
-          The Core Java engine will evaluate your CGPA, year, backlogs, and category against national benchmarks.
+        <p style={{ color: '#6f797c', marginTop: '8px' }}>
+          Your CGPA, year, backlogs, stream and category will be checked against national eligibility benchmarks.
         </p>
       </div>
     );
@@ -60,72 +60,42 @@ export default function StudentResultsPanel({ evaluationData, onSelectPathway })
   const getCategoryBgColor = (category) => {
     switch (category) {
       case 'CIVIL_SERVICES':
-        return '#f59e0b'; // Amber
+        return '#8b5000'; // Secondary
       case 'MANAGEMENT':
-        return '#3b82f6'; // Blue
+        return '#005a69'; // Primary
       case 'DEFENCE':
-        return '#10b981'; // Emerald
+        return '#1e7385'; // Primary container
       case 'TECHNICAL':
-        return '#8b5cf6'; // Purple
+        return '#5d4f42'; // Tertiary
       case 'HIGHER_STUDIES_ABROAD':
-        return '#0284c7'; // Sky
+        return '#2a7b8e'; // Teal
       case 'GOVERNMENT_BANKING':
-        return '#ea580c'; // Orange
+        return '#b36a00'; // Amber
       default:
-        return '#111827';
+        return '#173342';
     }
   };
 
   return (
     <div>
-      {/* Summary Color Block Banner */}
-      <div className="summary-banner">
-        <div className="stat-block" style={{ backgroundColor: '#ffffff' }}>
-          <div className="stat-label">Total Benchmarked</div>
-          <div className="stat-number" style={{ color: '#111827' }}>
-            {summary.totalExams}
-          </div>
-          <div className="stat-sub" style={{ color: '#6b7280' }}>
-            National Exams & Drives
-          </div>
+      {/* Section heading (summary figures live in the dashboard overview above) */}
+      <div className="mb-space-md flex flex-wrap items-end justify-between gap-space-sm">
+        <div>
+          <span className="text-label-md uppercase tracking-widest text-outline">Eligibility Matrix</span>
+          <h3 className="text-headline-md font-semibold text-on-surface">
+            {summary.eligibleCount} of {summary.totalExams} programs open for {student.name || 'you'}
+          </h3>
         </div>
-
-        <div className="stat-block" style={{ backgroundColor: '#ecfdf5', borderColor: '#10b981' }}>
-          <div className="stat-label" style={{ color: '#047857' }}>
-            Eligible Today
-          </div>
-          <div className="stat-number" style={{ color: '#10b981' }}>
-            {summary.eligibleCount}
-          </div>
-          <div className="stat-sub" style={{ color: '#047857' }}>
-            Ready for Immediate Prep
-          </div>
-        </div>
-
-        <div className="stat-block" style={{ backgroundColor: '#fffbeb', borderColor: '#f59e0b' }}>
-          <div className="stat-label" style={{ color: '#b45309' }}>
-            Action Required
-          </div>
-          <div className="stat-number" style={{ color: '#f59e0b' }}>
-            {summary.shortfallCount}
-          </div>
-          <div className="stat-sub" style={{ color: '#b45309' }}>
-            Remediable via Guidance
-          </div>
-        </div>
-
-        <div className="stat-block" style={{ backgroundColor: '#eff6ff', borderColor: '#3b82f6' }}>
-          <div className="stat-label" style={{ color: '#1d4ed8' }}>
-            Academic Profile
-          </div>
-          <div className="stat-number" style={{ fontSize: '1.4rem', color: '#1e40af' }}>
-            CGPA {student.cgpa}
-          </div>
-          <div className="stat-sub" style={{ color: '#1d4ed8' }}>
-            {student.categoryLabel} • {student.activeBacklogs} Backlogs
-          </div>
-        </div>
+        <span className="rounded-full bg-surface-container-low px-space-md py-space-xs text-label-md text-on-surface-variant">
+          CGPA {student.cgpa} • {student.categoryLabel} • {student.activeBacklogs} Backlogs
+        </span>
       </div>
+      {evaluationData.hiddenCount > 0 && (
+        <p className="mb-space-md text-body-sm text-outline">
+          Showing programs open to your stream ({student.branchDisplay || student.branch}). {evaluationData.hiddenCount}{' '}
+          {evaluationData.hiddenCount === 1 ? 'exam' : 'exams'} meant for other streams {evaluationData.hiddenCount === 1 ? 'is' : 'are'} hidden.
+        </p>
+      )}
 
       {/* Filter Tabs Bar */}
       <div className="filter-tabs-bar">
@@ -140,7 +110,7 @@ export default function StudentResultsPanel({ evaluationData, onSelectPathway })
           type="button"
           className={`filter-chip ${filterCategory === 'ELIGIBLE' ? 'active' : ''}`}
           onClick={() => setFilterCategory('ELIGIBLE')}
-          style={{ borderColor: '#10b981' }}
+          
         >
           Eligible ({summary.eligibleCount})
         </button>
@@ -148,7 +118,7 @@ export default function StudentResultsPanel({ evaluationData, onSelectPathway })
           type="button"
           className={`filter-chip ${filterCategory === 'SHORTFALL' ? 'active' : ''}`}
           onClick={() => setFilterCategory('SHORTFALL')}
-          style={{ borderColor: '#f59e0b' }}
+          
         >
           Action Required ({summary.shortfallCount})
         </button>
@@ -215,7 +185,7 @@ export default function StudentResultsPanel({ evaluationData, onSelectPathway })
                 <div className="exam-title-area">
                   <div className="exam-badge-category">{exam.examCategory.replace(/_/g, ' ')}</div>
                   <h4 className="exam-name">{exam.examName}</h4>
-                  <div style={{ fontSize: '0.75rem', color: '#6b7280', fontWeight: 600 }}>
+                  <div style={{ fontSize: '0.75rem', color: '#6f797c', fontWeight: 600 }}>
                     Code: {exam.examCode}
                   </div>
                 </div>
@@ -247,7 +217,7 @@ export default function StudentResultsPanel({ evaluationData, onSelectPathway })
                   <span
                     style={{
                       fontWeight: 800,
-                      color: student.cgpa >= exam.minCgpaCutoff ? '#10b981' : '#ef4444'
+                      color: student.cgpa >= exam.minCgpaCutoff ? '#10b981' : '#ba1a1a'
                     }}
                   >
                     {student.cgpa}
@@ -264,12 +234,12 @@ export default function StudentResultsPanel({ evaluationData, onSelectPathway })
                   </div>
                   {exam.shortfalls.map((s, idx) => (
                     <div key={idx} className="shortfall-item">
-                      <div style={{ fontWeight: 800, color: '#991b1b' }}>{s.parameter}</div>
-                      <div style={{ fontSize: '0.78rem', color: '#4b5563' }}>
+                      <div style={{ fontWeight: 800, color: '#93000a' }}>{s.parameter}</div>
+                      <div style={{ fontSize: '0.78rem', color: '#3f484b' }}>
                         Required: <strong>{s.requiredCriteria}</strong> | Current:{' '}
                         <strong>{s.actualValue}</strong>
                       </div>
-                      <div style={{ fontSize: '0.75rem', color: '#1f2937', marginTop: '2px' }}>
+                      <div style={{ fontSize: '0.75rem', color: '#173342', marginTop: '2px' }}>
                         💡 {s.actionableAdvice}
                       </div>
                     </div>
@@ -286,7 +256,7 @@ export default function StudentResultsPanel({ evaluationData, onSelectPathway })
             </div>
 
             {/* Action Bar */}
-            <div style={{ marginTop: '16px', paddingTop: '12px', borderTop: '2px solid #e5e7eb' }}>
+            <div style={{ marginTop: '16px', paddingTop: '12px', borderTop: '1px solid #bec8cb' }}>
               <button
                 type="button"
                 className="btn btn-secondary"

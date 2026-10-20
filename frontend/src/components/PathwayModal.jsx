@@ -1,5 +1,5 @@
 import React from 'react';
-import { X, Calendar, BookOpen, Clock, CheckCircle2, Award, ExternalLink, Bookmark } from 'lucide-react';
+import { X, Calendar, BookOpen, Clock, CheckCircle2, Award, ExternalLink, Bookmark } from './Icon';
 
 export default function PathwayModal({ pathwayData, examCode, onClose }) {
   if (!pathwayData) return null;
@@ -55,11 +55,11 @@ export default function PathwayModal({ pathwayData, examCode, onClose }) {
         {/* Header */}
         <div className="modal-header">
           <div>
-            <span className="brand-tag" style={{ backgroundColor: '#3b82f6', marginBottom: '6px', display: 'inline-block' }}>
+            <span className="brand-tag" style={{ backgroundColor: '#005a69', marginBottom: '6px', display: 'inline-block' }}>
               Structured Pathway Roadmap
             </span>
             <h2>{data.examName}</h2>
-            <div style={{ fontSize: '0.85rem', color: '#6b7280', fontWeight: 600 }}>
+            <div style={{ fontSize: '0.85rem', color: '#6f797c', fontWeight: 600 }}>
               Exam Code: <strong>{data.examCode}</strong>
             </div>
           </div>
@@ -71,20 +71,20 @@ export default function PathwayModal({ pathwayData, examCode, onClose }) {
         {/* Overview Box */}
         <div
           style={{
-            backgroundColor: '#eff6ff',
-            border: '2px solid #3b82f6',
-            borderRadius: '8px',
+            backgroundColor: '#e9f5ff',
+            border: '1px solid #005a69',
+            borderRadius: '20px',
             padding: '16px',
             marginBottom: '20px'
           }}
         >
-          <div style={{ fontWeight: 800, color: '#1e40af', marginBottom: '4px', fontSize: '0.9rem' }}>
+          <div style={{ fontWeight: 800, color: '#004e5c', marginBottom: '4px', fontSize: '0.9rem' }}>
             🧭 Examination Overview
           </div>
-          <p style={{ fontSize: '0.92rem', color: '#1f2937', marginBottom: '8px' }}>
+          <p style={{ fontSize: '0.92rem', color: '#173342', marginBottom: '8px' }}>
             {data.overview}
           </p>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.85rem', fontWeight: 700, color: '#2563eb' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.85rem', fontWeight: 700, color: '#005a69' }}>
             <Clock size={16} />
             Recommended Preparation Timeline: {data.timeline}
           </div>
@@ -120,14 +120,14 @@ export default function PathwayModal({ pathwayData, examCode, onClose }) {
           {/* Books */}
           <div
             style={{
-              backgroundColor: '#f3f4f6',
-              border: '2px solid #111827',
-              borderRadius: '8px',
+              backgroundColor: '#e9f5ff',
+              border: '1px solid #bec8cb',
+              borderRadius: '20px',
               padding: '16px'
             }}
           >
             <div style={{ fontWeight: 800, fontSize: '0.95rem', marginBottom: '10px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <BookOpen size={18} color="#3b82f6" />
+              <BookOpen size={18} color="#005a69" />
               Standard Reference Books
             </div>
             <ul style={{ listStyle: 'none', paddingLeft: 0 }}>
@@ -138,7 +138,7 @@ export default function PathwayModal({ pathwayData, examCode, onClose }) {
                     fontSize: '0.82rem',
                     marginBottom: '6px',
                     paddingBottom: '4px',
-                    borderBottom: '1px solid #e5e7eb',
+                    borderBottom: '1px solid #bec8cb',
                     fontWeight: 600
                   }}
                 >
@@ -152,8 +152,8 @@ export default function PathwayModal({ pathwayData, examCode, onClose }) {
           <div
             style={{
               backgroundColor: '#ecfdf5',
-              border: '2px solid #10b981',
-              borderRadius: '8px',
+              border: '1px solid #10b981',
+              borderRadius: '20px',
               padding: '16px'
             }}
           >
@@ -161,7 +161,7 @@ export default function PathwayModal({ pathwayData, examCode, onClose }) {
               <Calendar size={18} color="#10b981" />
               College Study Timetable
             </div>
-            <p style={{ fontSize: '0.88rem', color: '#1f2937', lineHeight: '1.6' }}>
+            <p style={{ fontSize: '0.88rem', color: '#173342', lineHeight: '1.6' }}>
               {data.studySchedule}
             </p>
             <div style={{ marginTop: '12px', fontSize: '0.78rem', color: '#047857', fontWeight: 700 }}>
@@ -171,7 +171,7 @@ export default function PathwayModal({ pathwayData, examCode, onClose }) {
         </div>
 
         {/* Footer */}
-        <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '12px', paddingTop: '16px', borderTop: '2px solid #e5e7eb' }}>
+        <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '12px', paddingTop: '16px', borderTop: '1px solid #bec8cb' }}>
           <button type="button" className="btn btn-secondary" onClick={onClose}>
             Close Roadmap
           </button>

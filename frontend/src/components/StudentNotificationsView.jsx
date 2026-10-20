@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Bell, AlertTriangle, Info, CheckCircle2, User, Clock, Filter, Tag } from 'lucide-react';
+import { Bell, AlertTriangle, Info, CheckCircle2, User, Clock, Filter, Tag } from './Icon';
 
 export default function StudentNotificationsView({ notifications, currentStudent }) {
   const [filterPriority, setFilterPriority] = useState('ALL');
@@ -21,18 +21,18 @@ export default function StudentNotificationsView({ notifications, currentStudent
   };
 
   return (
-    <div style={{ maxWidth: '960px', margin: '0 auto' }}>
+    <div className="mx-auto w-full max-w-4xl">
       <div className="flat-card" style={{ marginBottom: '20px' }}>
         <div className="card-title-bar">
           <h3>
-            <Bell size={22} color="#3b82f6" />
+            <Bell size={22} color="#005a69" />
             Official Announcements & Recommendations Inbox
           </h3>
-          <span className="brand-tag" style={{ backgroundColor: '#111827' }}>
+          <span className="brand-tag" style={{ backgroundColor: '#001e2c' }}>
             Delivered by Faculty
           </span>
         </div>
-        <p style={{ color: '#4b5563', fontSize: '0.92rem' }}>
+        <p style={{ color: '#3f484b', fontSize: '0.92rem' }}>
           Personalized notices, mentorship sessions, and preparation circulars delivered to your student profile (<strong>{currentStudent ? currentStudent.name : 'Student'}</strong>) by academic mentors.
         </p>
 
@@ -49,7 +49,7 @@ export default function StudentNotificationsView({ notifications, currentStudent
             type="button"
             className={`filter-chip ${filterPriority === 'URGENT' ? 'active' : ''}`}
             onClick={() => setFilterPriority('URGENT')}
-            style={{ borderColor: '#ef4444' }}
+            style={{ borderColor: '#ba1a1a' }}
           >
             Urgent Alerts
           </button>
@@ -57,7 +57,7 @@ export default function StudentNotificationsView({ notifications, currentStudent
             type="button"
             className={`filter-chip ${filterPriority === 'ACTION_REQUIRED' ? 'active' : ''}`}
             onClick={() => setFilterPriority('ACTION_REQUIRED')}
-            style={{ borderColor: '#f59e0b' }}
+            style={{ borderColor: '#fea443' }}
           >
             Action Required
           </button>
@@ -65,7 +65,7 @@ export default function StudentNotificationsView({ notifications, currentStudent
             type="button"
             className={`filter-chip ${filterPriority === 'INFO' ? 'active' : ''}`}
             onClick={() => setFilterPriority('INFO')}
-            style={{ borderColor: '#3b82f6' }}
+            style={{ borderColor: '#005a69' }}
           >
             General Info
           </button>
@@ -77,7 +77,7 @@ export default function StudentNotificationsView({ notifications, currentStudent
         <div className="flat-card" style={{ textAlign: 'center', padding: '50px 20px' }}>
           <CheckCircle2 size={40} color="#10b981" style={{ margin: '0 auto 12px' }} />
           <h4>No Announcements in this category</h4>
-          <p style={{ color: '#6b7280', fontSize: '0.88rem', marginTop: '6px' }}>
+          <p style={{ color: '#6f797c', fontSize: '0.88rem', marginTop: '6px' }}>
             You are fully caught up with faculty advisories and exam notifications.
           </p>
         </div>
@@ -90,13 +90,13 @@ export default function StudentNotificationsView({ notifications, currentStudent
                   {getPriorityBadge(n.priority)}
                   <span
                     style={{
-                      backgroundColor: '#eff6ff',
-                      color: '#1d4ed8',
+                      backgroundColor: '#e9f5ff',
+                      color: '#005a69',
                       fontSize: '0.72rem',
                       fontWeight: 800,
                       padding: '3px 8px',
-                      borderRadius: '4px',
-                      border: '1px solid #bfdbfe'
+                      borderRadius: '9999px',
+                      border: '1px solid #87d1e6'
                     }}
                   >
                     Target: {n.targetExamCode}
@@ -104,7 +104,7 @@ export default function StudentNotificationsView({ notifications, currentStudent
                 </div>
                 <h4 className="notif-title">{n.title}</h4>
               </div>
-              <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#6b7280' }}>
+              <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#6f797c' }}>
                 {n.timestamp}
               </span>
             </div>
@@ -112,11 +112,11 @@ export default function StudentNotificationsView({ notifications, currentStudent
             <p className="notif-message">{n.message}</p>
 
             <div className="notif-meta">
-              <span style={{ display: 'flex', alignItems: 'center', gap: '6px', fontWeight: 700, color: '#111827' }}>
-                <User size={14} color="#3b82f6" />
+              <span style={{ display: 'flex', alignItems: 'center', gap: '6px', fontWeight: 700, color: '#001e2c' }}>
+                <User size={14} color="#005a69" />
                 From: {n.sender}
               </span>
-              <span style={{ fontSize: '0.75rem', color: '#4b5563' }}>
+              <span style={{ fontSize: '0.75rem', color: '#3f484b' }}>
                 Audience: <strong>{n.targetAudience}</strong>
               </span>
             </div>
