@@ -234,6 +234,7 @@ Other available API endpoints include:
 - **Java compilation errors:** Verify the installed JDK version and ensure all required source files and dependencies are available.
 - **Frontend cannot connect to the backend:** Confirm that the backend is running and that the API URL and frontend configuration match.
 
-### Repository
-
-GitHub: https://github.com/samruddhimagar07-sketch/disha-eligibility-engine
+###RUN:
+Get-ChildItem backend\src -Recurse -Filter *.java | ForEach-Object { (Resolve-Path -Relative $_.FullName).Substring(2).Replace('\','/') } | Out-File -Encoding ascii sources.txt
+javac -d backend\bin "@sources.txt"
+java -cp backend\bin com.disha.DishaApplication --server
